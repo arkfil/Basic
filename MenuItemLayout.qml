@@ -4,9 +4,11 @@ import QtQuick.Controls 2.0
 import QtGraphicalEffects 1.0
 import "qrc:/scripts.js" as MyScripts
 
+
+
 Rectangle{
     id: menuOption
-
+    //onFocusChanged: manager.readNote(noteId);
 
     height: 74
     color: "#444240"
@@ -63,8 +65,8 @@ Rectangle{
 
         }
 
-        onClicked: MyScripts.clickNote(index), takiseListwiev.currentIndex = index, noteTitleTextField.text=menuOptionLabel.text
-
+        ///onClicked: MyScripts.clickNote(index), takiseListwiev.currentIndex = index, noteTitleTextField.text=menuOptionLabel.text
+        onClicked: manager.readNote(noteId), takiseListwiev.currentIndex = index
     }
 
 

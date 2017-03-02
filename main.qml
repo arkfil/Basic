@@ -75,11 +75,8 @@ Window {
             target: manager
             onIncreaseOne: confirmations.text=ms
             onPushNote: MyScripts.loadAnotherNote(noteTitle,noteContents,noteId)
+            onExposeNote: MyScripts.showNote(noteTitle, noteContents)
         }
-
-
-
-
 
         Button {
             id: saveButton
@@ -93,13 +90,13 @@ Window {
             anchors.rightMargin: 6
             visible: true
             property var tempIdk: 0;
-            onClicked: tempIdk = manager.saveNote("lol","lol2",-1)
+
+            onClicked: tempIdk = manager.saveNote(noteTitleTextField.text,textNote.text,-1)
 
                 hoverEnabled: true
                 ToolTip.delay: 1
                 ToolTip.visible: hovered
                 ToolTip.text: qsTr("Save note")
-
         }
 
         Button {
@@ -168,20 +165,22 @@ Window {
            id:menuArea
            color: "#262627"
 
-            visible: true
-            objectName:"menuArea"
+           visible: true
+           objectName:"menuArea"
 
-            opacity: 0.9
-
+           opacity: 0.9
 
 
             ListView{
                     anchors.fill: parent
                     id:takiseListwiev
-                    onFocusChanged: MyScripts.clickNote(currentIndex-1)/*,textNote.text=MenuItemLayout.getMenuOptionLabel()*/
+                    //onFocusChanged: MyScripts.clickNote(currentIndex-1)/*,textNote.text=MenuItemLayout.getMenuOptionLabel()*/
+
+
                     highlight: Rectangle { color: "lightsteelblue"; radius: 5; anchors.left:parent.left; anchors.leftMargin: 6 }
                     highlightMoveVelocity:9000000
                     highlightRangeMode: ListView.ApplyRange
+
                     focus: true
                     spacing :8
                     snapMode: ListView.SnapToItem
@@ -194,7 +193,6 @@ Window {
 
                     delegate: MenuItemLayout{}
             }
-
 
 
             Label {
@@ -215,40 +213,9 @@ Window {
 
 
             }
-
-            Button {
-                property int number : 1+(90000*Math.random())
-                id: addNoteTest
-                x: 167
-                y: 443
-                text: qsTr("addNoteTest")
-                //onClicked: MyScripts.loadAnotherNote(noteTitleTextField.text,"placeholder",number)
-                onClicked: manager.readNote(saveButton.tempIdk)
-            }
-
-
-
-
-
-
-
-
          }
 
-
-
-
-
-// ------------------------------------------------------- MENU AREA ---------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
+// ------------------------------------------------------- MENU AREA END ---------------------------------------------------------------------
 
         }
 

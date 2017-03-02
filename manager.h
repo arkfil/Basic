@@ -33,10 +33,11 @@ public slots:
     bool removeNote(int);
     void readNote(int);
 
+
 signals:
     void increaseOne(QString ms);
     void pushNote(QString noteTitle,QString noteContents,int noteId);
-
+    void exposeNote(QString noteTitle,QString noteContents);
 
 
 

@@ -1,5 +1,5 @@
 #include "manager.h"
-
+#include <iostream>
 #include <utility>
 
 Manager::Manager(TxtFile& txtFile_p, QObject *parent) : txtFile(txtFile_p), QObject(parent), count(0), msg("%1 Save Hits")
@@ -22,15 +22,10 @@ void pushNote(QString noteName,QString noteContents,int noteId)
 void Manager::readNote(int noteId)
 {
     // Not implemented yet
-  /*
+    std::cout << " BBBBBBBBBBBBBBBBBBBBBBBBB "<< noteId;
     QString noteName = noteBase.at(noteId).getName();
     QString noteContents = noteBase.at(noteId).getContents();;
-  */
-     QString noteName = "heheszki";
-     QString noteContents = "placeholder";
-
-    emit pushNote(noteName, noteContents, noteId);
-
+    emit exposeNote(noteName, noteContents);
 
 
 }
@@ -49,9 +44,10 @@ int Manager::saveNote(QString noteName,QString noteContents, int noteId)
 
 
     // Poor implementation
+    int newId=noteId;
 
     if(noteId==Note::NOTE_ALREADY_EXISTS){
-        int newId = this -> getFreeId();
+        newId = this -> getFreeId();
         Note note(noteName,noteContents,newId);
         QString idAsQString = QString::number(newId);
 
@@ -66,13 +62,19 @@ int Manager::saveNote(QString noteName,QString noteContents, int noteId)
         txtFile.saveToFile(idAsQString,noteContents);
     }
 
+    std::cout << " AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA "<<newId;
 
+    //QString noteName = "heheszki";
+   // QString noteContents = "placeholder";
 
+    emit pushNote(noteName, noteContents, newId);
 
     ++count;
     emit increaseOne(msg.arg(count));
-    return noteId;
+    return newId;
 }
+
+
 
 
 
@@ -84,8 +86,6 @@ bool Manager::removeNote(int noteId)
     QString idAsQString = QString::number(noteId);
     noteBase.erase(noteId);
     txtFile.removeLineFromFile(TxtFile::BASE_FILE_NAME,idAsQString);
-
-
     txtFile.removeFile(idAsQString);
 
 
