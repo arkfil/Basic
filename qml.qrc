@@ -3,5 +3,6 @@
         <file>main.qml</file>
         <file>MenuItem.qml</file>
         <file>scripts.js</file>
+        <file>MenuItemLayout.qml</file>
     </qresource>
 </RCC>

@@ -10,7 +10,7 @@ Note::Note(QString noteName, QString noteContent, int noteId)
     this->id = noteId;
 }
 
-QString Note::getContent()
+QString Note::getContents()
 {
     return content;
 }

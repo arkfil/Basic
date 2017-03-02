@@ -6,36 +6,36 @@
 
 
 
-    function loadAnotherNote(noteTitle,noteId){
+    function loadAnotherNote(noteTitle,noteContents,noteId){
 
         menuOption = Qt.createComponent("qrc:/MenuItem.qml");
 
-        element = menuOption.createObject(flickableMenuArea.contentItem,{"x": 100, "y":100});
+        //element = menuOption.createObject(flickableMenuArea.contentItem,{"x": 100, "y":100});
 
 
-        element.noteId=noteId;
-        element.objectName=toString(noteId);
-
-        element.noteTitle = noteTitle;
+        menuOption.noteTitleLabel=noteTitle;
+        menuOption.noteId=noteId;
         previousNotePosition+=82;
 
-        element.previousNotePosition=previousNotePosition;
+        menuOption.previousNotePosition=previousNotePosition;
+        menuOption.noteColor="#444240";
 
-        if(previousNotePosition>=430){
-            flickableMenuArea.contentHeight+=82;
-        }
+
+
+        flickableMenuArea.append(menuOption);
+
+        //takiseListwiev.currentIndex = takiseListwiev.Bottom;
+
 
     }
 
-    function removeNote(){
-
+    function removeNote(index){
+        if(index>=0){
+           flickableMenuArea.remove(index);
+        }
     }
 
 
     function clickNote(noteId){
-
-
-
-
-
+        textNote.text=noteId;
     }

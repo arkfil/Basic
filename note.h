@@ -9,7 +9,7 @@ public:
 
 
     Note(QString,QString,int);
-    QString getContent();
+    QString getContents();
     QString getName();
     int getId();
 

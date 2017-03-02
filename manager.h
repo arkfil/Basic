@@ -12,9 +12,9 @@ class Manager : public QObject
 public:
     explicit Manager(TxtFile&,QObject* parent=0);
     void readNotesToMemory();
-    bool readNote(int);
+
 //    bool saveNote(int);
-    bool removeNote(int);
+
 
 private:
     bool checkWhetherInTheMap(int noteId);
@@ -28,13 +28,14 @@ private:
 
 public slots:
   //  void write();
-    bool saveNote(QString,QString,int);
+    int saveNote(QString,QString,int);
 //    bool modifyNote(QString, QString, int noteId);
-
+    bool removeNote(int);
+    void readNote(int);
 
 signals:
     void increaseOne(QString ms);
-
+    void pushNote(QString noteTitle,QString noteContents,int noteId);
 
 
 

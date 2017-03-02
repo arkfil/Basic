@@ -10,17 +10,12 @@ Window {
     height: 540
     minimumHeight: 216
     minimumWidth: 900
-
-
-
     title: qsTr("Notebook")
-
 
     Rectangle {
         anchors.fill: parent
         id: insideWindow
         objectName: "insideWindow"
-
         width: 360
         height: 360
         color: "#2d2e32"
@@ -28,9 +23,7 @@ Window {
         anchors.bottomMargin: 0
         anchors.leftMargin: 0
         anchors.topMargin: 0
-
         border.color: "black"
-
 
     Flickable {
         id: flickable
@@ -51,22 +44,19 @@ Window {
                 objectName: "textNote"
                 text: qsTr("Contents")
                 height:1000
-                wrapMode: TextArea.WrapAtWordBoundaryOrAnywhere
+               // wrapMode: TextArea.WrapAtWordBoundaryOrAnywhere
+                wrapMode: TextArea.NoWrap
                 textFormat: TextArea.RichText
                 anchors.rightMargin: 8
                 anchors.leftMargin: 277
                 anchors.bottomMargin: 8
                 anchors.topMargin: 80
-
                 clip: false
                 visible: true
-
                 color:"white"
                 opacity: 1
-
                 selectByKeyboard: true
                 selectByMouse: true
-
                 background: Rectangle{
                                 width: textNote.width
                                 height: textNote.height
@@ -79,14 +69,17 @@ Window {
             }
             ScrollBar.vertical: ScrollBar { }
             ScrollBar.horizontal: ScrollBar { }
-
-
     }
 
         Connections {
             target: manager
             onIncreaseOne: confirmations.text=ms
+            onPushNote: MyScripts.loadAnotherNote(noteTitle,noteContents,noteId)
         }
+
+
+
+
 
         Button {
             id: saveButton
@@ -99,8 +92,8 @@ Window {
             anchors.right: deleteButton.left
             anchors.rightMargin: 6
             visible: true
-
-            onClicked: manager.saveNote("lol","lol2",-1)
+            property var tempIdk: 0;
+            onClicked: tempIdk = manager.saveNote("lol","lol2",-1)
 
                 hoverEnabled: true
                 ToolTip.delay: 1
@@ -111,7 +104,7 @@ Window {
 
         Button {
             id: deleteButton
-            //onClicked:
+            onClicked:MyScripts.removeNote(takiseListwiev.currentIndex)
             x: 830
             y: 8
             width: 122
@@ -130,7 +123,7 @@ Window {
         }
 
        TextField {
-            id: noteTitle
+            id: noteTitleTextField
             y: 8
             height: 66
             objectName: "noteTitle"
@@ -143,17 +136,15 @@ Window {
             anchors.rightMargin: 6
             anchors.bottom: flickable.top
             anchors.bottomMargin: 6
-
+            clip: true
             maximumLength: 33
-
-
 
 
             selectByMouse: true
 
             background: Rectangle{
-                            width: noteTitle.width
-                            height: noteTitle.height
+                            width: noteTitleTextField.width
+                            height: noteTitleTextField.height
                             color:"#2d2e32"
                             border.color: "gray"
             }
@@ -176,48 +167,32 @@ Window {
            anchors.topMargin: 8
            id:menuArea
            color: "#262627"
-//            anchors.right: flickable.left
+
             visible: true
             objectName:"menuArea"
-//            anchors.rightMargin: 6
-//            anchors.left: parent.left
-//            anchors.leftMargin: 8
-//            anchors.bottom: parent.bottom
-//            anchors.bottomMargin: 8
-//            anchors.top: parent.top
-//            anchors.topMargin: 8
+
             opacity: 0.9
 
 
 
-           Flickable {
+            ListView{
+                    anchors.fill: parent
+                    id:takiseListwiev
+                    onFocusChanged: MyScripts.clickNote(currentIndex-1)/*,textNote.text=MenuItemLayout.getMenuOptionLabel()*/
+                    highlight: Rectangle { color: "lightsteelblue"; radius: 5; anchors.left:parent.left; anchors.leftMargin: 6 }
+                    highlightMoveVelocity:9000000
+                    highlightRangeMode: ListView.ApplyRange
+                    focus: true
+                    spacing :8
+                    snapMode: ListView.SnapToItem
 
-
-
-
-
-
+                    model: ListModel{
 
                         id: flickableMenuArea
-                        maximumFlickVelocity: 1555
-                        anchors.fill: parent
-                        interactive:true
-                        contentHeight: menuArea.height
-                        contentWidth: menuArea.width
 
-                      //  height: menuArea.height
-                     //   width: menuArea.width
+                    }
 
-
-                        //boundsBehavior: flickable.StopAtBounds
-                       // flickableDirection: Flickable.HorizontalAndVerticalFlick
-
-                       // anchors.bottomMargin: 28
-                       // ScrollBar.horizontal: ScrollBar { }
-
-
-
-
+                    delegate: MenuItemLayout{}
             }
 
 
@@ -247,7 +222,8 @@ Window {
                 x: 167
                 y: 443
                 text: qsTr("addNoteTest")
-                onClicked: MyScripts.loadAnotherNote(noteTitle.text,number)
+                //onClicked: MyScripts.loadAnotherNote(noteTitleTextField.text,"placeholder",number)
+                onClicked: manager.readNote(saveButton.tempIdk)
             }
 
 

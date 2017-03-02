@@ -12,14 +12,30 @@ void Manager::readNotesToMemory()
     // Not implemented yet
 
 }
+/*
+void pushNote(QString noteName,QString noteContents,int noteId)
+{
 
-bool Manager::readNote(int noteId)
+}
+*/
+
+void Manager::readNote(int noteId)
 {
     // Not implemented yet
-    return true;
+  /*
+    QString noteName = noteBase.at(noteId).getName();
+    QString noteContents = noteBase.at(noteId).getContents();;
+  */
+     QString noteName = "heheszki";
+     QString noteContents = "placeholder";
+
+    emit pushNote(noteName, noteContents, noteId);
+
+
+
 }
 
-bool Manager::saveNote(QString noteName,QString noteContents, int noteId)
+int Manager::saveNote(QString noteName,QString noteContents, int noteId)
 {
     // jeżeli to całkowicie nowa notatka:
     //  - dodaje do mapy
@@ -55,7 +71,7 @@ bool Manager::saveNote(QString noteName,QString noteContents, int noteId)
 
     ++count;
     emit increaseOne(msg.arg(count));
-    return true;
+    return noteId;
 }
 
 
