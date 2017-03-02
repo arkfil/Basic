@@ -6,9 +6,14 @@ import "qrc:/scripts.js" as MyScripts
     Rectangle{
         property var noteTitle: qsTr("Here is a title")
         property var previousNotePosition
-        property int noteId
+        property var noteId: 0
+       // property var col:"#444240"
 
-        id:menuOption
+
+        id: menuOption
+        objectName: "0"
+
+
         height: 74
         color: "#444240"
         visible: true
@@ -57,6 +62,6 @@ import "qrc:/scripts.js" as MyScripts
 
             }
 
-            onClicked:MyScripts.clickNote()
+            onClicked:MyScripts.clickNote(noteId)
         }
     }

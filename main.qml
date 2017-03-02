@@ -198,7 +198,6 @@ Window {
 
 
 
-
                         id: flickableMenuArea
                         maximumFlickVelocity: 1555
                         anchors.fill: parent
@@ -243,11 +242,12 @@ Window {
             }
 
             Button {
+                property int number : 1+(90000*Math.random())
                 id: addNoteTest
                 x: 167
                 y: 443
                 text: qsTr("addNoteTest")
-                onClicked: MyScripts.loadAnotherNote(noteTitle.text,1)
+                onClicked: MyScripts.loadAnotherNote(noteTitle.text,number)
             }
 
 
