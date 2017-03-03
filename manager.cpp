@@ -53,13 +53,13 @@ int Manager::saveNote(QString noteName,QString noteContents, int noteId)
 
 
         noteBase.insert(std::make_pair(newId,note));
-        txtFile.saveToFile(idAsQString,noteContents);
-        txtFile.addToFile(TxtFile::BASE_FILE_NAME, ""+idAsQString);
+        txtFile.saveToFile(noteName,noteContents,idAsQString);
+        txtFile.addToFile(TxtFile::BASE_FILE_NAME, idAsQString);
     }else{
         noteBase.at(noteId).setContent(noteContents);
         noteBase.at(noteId).setName(noteName);
         QString idAsQString = QString::number(noteId);
-        txtFile.saveToFile(idAsQString,noteContents);
+        txtFile.saveToFile(noteName,noteContents,idAsQString);
     }
 
     std::cout << " AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA "<<newId;
@@ -82,7 +82,7 @@ bool Manager::removeNote(int noteId)
 {
     // Poor implementation
 
-
+    std::cout << " REMOOOOOOOOOOOOOOOOOOOOOOOOOOOVVVVVVVVVVVVVVVVEEEEEEEEEEEEEEEEEEEEE:           " <<noteId;
     QString idAsQString = QString::number(noteId);
     noteBase.erase(noteId);
     txtFile.removeLineFromFile(TxtFile::BASE_FILE_NAME,idAsQString);

@@ -13,8 +13,9 @@ public:
 
     TxtFile();
     ~TxtFile();
-    bool saveToFile(QString, QString);
+    bool saveToFile(QString, QString, QString);
     bool addToFile(QString, QString);
+    QString readWholeFileContents(QString);
     bool removeLineFromFile(QString,QString);
     bool removeFile(QString);
 
