@@ -18,6 +18,8 @@ public:
     QString readWholeFileContents(QString);
     bool removeLineFromFile(QString,QString);
     bool removeFile(QString);
+    QString readFirstLineOfFileOnly(QString);
+    QString readEverythingExceptFirstLineOfFile(QString);
 
 
 

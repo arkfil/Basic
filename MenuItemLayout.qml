@@ -5,13 +5,9 @@ import QtGraphicalEffects 1.0
 import "qrc:/scripts.js" as MyScripts
 
 
-
-Rectangle{
+Item{
     id: menuOption
-    //onFocusChanged: manager.readNote(noteId);
-
     height: 74
-    color: "#444240"
     visible: true
     opacity:0.8
     anchors.right: parent.right
@@ -19,12 +15,11 @@ Rectangle{
     anchors.left: parent.left
     anchors.leftMargin: 6
 
-  //  anchors.top: parent.top
-
-   // anchors.topMargin: 8 + previousNotePosition
-
-
-
+    Rectangle{
+        anchors.fill:parent
+        color: "#444240"
+        radius: 3
+    }
 
     Label{
         id: menuOptionLabel
@@ -42,18 +37,11 @@ Rectangle{
         color: "#ffffff"
         visible: true
     }
-    function getMenuOptionLabel(){
-        return menuOptionLabel.text;
-    }
-
 
     MouseArea{
         anchors.fill: parent
         hoverEnabled: true
-
         onHoveredChanged: menuOptionTip.visible=true, cursorShape = Qt.PointingHandCursor
-
-
         onExited: menuOptionTip.visible=false
 
         ToolTip{
@@ -64,14 +52,6 @@ Rectangle{
             text: qsTr("Click to select this note")
 
         }
-
-        ///onClicked: MyScripts.clickNote(index), takiseListwiev.currentIndex = index, noteTitleTextField.text=menuOptionLabel.text
         onClicked: manager.readNote(noteId), takiseListwiev.currentIndex = index
     }
-
-
-
-
-
-
 }

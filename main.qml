@@ -25,26 +25,28 @@ Window {
         anchors.topMargin: 0
         border.color: "black"
 
-    Flickable {
-        id: flickable
-        flickableDirection: Flickable.HorizontalAndVerticalFlick
-        anchors.right: parent.right
-        anchors.rightMargin: 8
-        anchors.left: parent.left
-        anchors.leftMargin: 277
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 8
-        anchors.top: parent.top
-        anchors.topMargin: 80
+        Label{ id: lololo; x: 106; y: 457; width: 128;height: 20 ; text: "asadasdasd" ; font.bold: true;horizontalAlignment: Text.AlignHCenter; color: "white"}
+
+        Flickable {
+            id: flickable
+            flickableDirection: Flickable.HorizontalAndVerticalFlick
+            anchors.right: parent.right
+            anchors.rightMargin: 8
+            anchors.left: parent.left
+            anchors.leftMargin: 277
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 8
+            anchors.top: parent.top
+            anchors.topMargin: 80
 
 
-             TextArea.flickable: TextArea{
+            TextArea.flickable: TextArea{
 
                 id: textNote
                 objectName: "textNote"
                 text: qsTr("Contents")
                 height:1000
-               // wrapMode: TextArea.WrapAtWordBoundaryOrAnywhere
+                // wrapMode: TextArea.WrapAtWordBoundaryOrAnywhere
                 wrapMode: TextArea.NoWrap
                 textFormat: TextArea.RichText
                 anchors.rightMargin: 8
@@ -58,10 +60,10 @@ Window {
                 selectByKeyboard: true
                 selectByMouse: true
                 background: Rectangle{
-                                width: textNote.width
-                                height: textNote.height
-                                color:"#2d2e32"
-                                border.color: "gray"
+                    width: textNote.width
+                    height: textNote.height
+                    color:"#2d2e32"
+                    border.color: "gray"
                 }
 
 
@@ -69,13 +71,16 @@ Window {
             }
             ScrollBar.vertical: ScrollBar { }
             ScrollBar.horizontal: ScrollBar { }
-    }
+        }
 
         Connections {
             target: manager
             onIncreaseOne: confirmations.text=ms
             onPushNote: MyScripts.loadAnotherNote(noteTitle,noteContents,noteId)
             onExposeNote: MyScripts.showNote(noteTitle, noteContents)
+            onLoadInToTheMenu: MyScripts.showNoteInTheMenu(noteTitle,noteContents,noteId)
+
+
         }
 
         Button {
@@ -93,15 +98,15 @@ Window {
 
             onClicked: tempIdk = manager.saveNote(noteTitleTextField.text,textNote.text,-1)
 
-                hoverEnabled: true
-                ToolTip.delay: 1
-                ToolTip.visible: hovered
-                ToolTip.text: qsTr("Save note")
+            hoverEnabled: true
+            ToolTip.delay: 1
+            ToolTip.visible: hovered
+            ToolTip.text: qsTr("Save note")
         }
 
         Button {
             id: deleteButton
-            onClicked:MyScripts.removeNote(takiseListwiev.currentIndex)
+            onClicked: MyScripts.removeNote(takiseListwiev.currentIndex), takiseListwiev.currentIndex-=1
             x: 830
             y: 8
             width: 122
@@ -113,13 +118,13 @@ Window {
             visible: true
 
 
-                hoverEnabled: true
-                ToolTip.delay: 1
-                ToolTip.visible: hovered
-                ToolTip.text: qsTr("Delete note")
+            hoverEnabled: true
+            ToolTip.delay: 1
+            ToolTip.visible: hovered
+            ToolTip.text: qsTr("Delete note")
         }
 
-       TextField {
+        TextField {
             id: noteTitleTextField
             y: 8
             height: 66
@@ -135,65 +140,50 @@ Window {
             anchors.bottomMargin: 6
             clip: true
             maximumLength: 33
-
-
             selectByMouse: true
-
             background: Rectangle{
-                            width: noteTitleTextField.width
-                            height: noteTitleTextField.height
-                            color:"#2d2e32"
-                            border.color: "gray"
+                width: noteTitleTextField.width
+                height: noteTitleTextField.height
+                color:"#2d2e32"
+                border.color: "gray"
             }
         }
 
-// ------------------------------------------------------- MENU AREA ---------------------------------------------------------------------
+        // ------------------------------------------------------- MENU AREA ---------------------------------------------------------------------
+        Rectangle{
 
-
-
-       Rectangle{
-
-           height: 907
-           anchors.right: flickable.left
-           anchors.rightMargin: 6
-           anchors.left: parent.left
-           anchors.leftMargin: 8
-           anchors.bottom: parent.bottom
-           anchors.bottomMargin: 8
-           anchors.top: parent.top
-           anchors.topMargin: 8
-           id:menuArea
-           color: "#262627"
-
-           visible: true
-           objectName:"menuArea"
-
-           opacity: 0.9
+            height: 907
+            anchors.right: flickable.left
+            anchors.rightMargin: 6
+            anchors.left: parent.left
+            anchors.leftMargin: 8
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 8
+            anchors.top: parent.top
+            anchors.topMargin: 8
+            id:menuArea
+            color: "#262627"
+            visible: true
+            objectName:"menuArea"
+            opacity: 0.9
 
 
             ListView{
-                    anchors.fill: parent
-                    id:takiseListwiev
-                    //onFocusChanged: MyScripts.clickNote(currentIndex-1)/*,textNote.text=MenuItemLayout.getMenuOptionLabel()*/
 
+                Component.onCompleted: manager.readNotesToMemory();
 
-                    highlight: Rectangle { color: "lightsteelblue"; radius: 5; anchors.left:parent.left; anchors.leftMargin: 6 }
-                    highlightMoveVelocity:9000000
-                    highlightRangeMode: ListView.ApplyRange
-
-                    focus: true
-                    spacing :8
-                    snapMode: ListView.SnapToItem
-
-                    model: ListModel{
-
-                        id: flickableMenuArea
-
-                    }
-
-                    delegate: MenuItemLayout{}
+                anchors.fill: parent
+                id:takiseListwiev
+                highlight: Rectangle { color: "lightsteelblue"; radius: 5; anchors.left:parent.left; anchors.leftMargin: 6 }
+                highlightMoveVelocity:900
+                highlightRangeMode: ListView.ApplyRange
+                highlightFollowsCurrentItem: true
+                focus: true
+                spacing :3
+                snapMode: ListView.SnapToItem
+                model: ListModel{ id: flickableMenuArea }
+                delegate: MenuItemLayout{}
             }
-
 
             Label {
                 id: confirmations
@@ -210,17 +200,8 @@ Window {
                 font.bold: true
                 font.pointSize: 12
                 horizontalAlignment: Text.AlignHCenter
-
-
             }
-         }
-
-// ------------------------------------------------------- MENU AREA END ---------------------------------------------------------------------
-
         }
-
-
+       // ------------------------------------------------------- MENU AREA END ---------------------------------------------------------------------
+    }
 }
-
-
-

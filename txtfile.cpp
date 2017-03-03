@@ -6,15 +6,10 @@
 
 const QString TxtFile::BASE_FILE_NAME="index";
 
-
-
-
 TxtFile::TxtFile()
 {
     qDebug("eeee");
 }
-
-
 
 TxtFile::~TxtFile()
 {
@@ -54,13 +49,12 @@ bool TxtFile::addToFile(QString name, QString contents)
     }
 }
 
-
 bool TxtFile::removeLineFromFile(QString name, QString linesContents)
 {
 
     QFile file("Notes/"+name);
 
-    if (!file.open(QIODevice::ReadWrite| QIODevice::Append))
+    if (!file.open(QIODevice::ReadWrite| QIODevice::Text))
     {
         qDebug() << "FAIL FILE NOT EXIST***";
         //file.close();
@@ -84,9 +78,8 @@ bool TxtFile::removeLineFromFile(QString name, QString linesContents)
         file.close();
         return true;
     }
-
-
 }
+
 
 bool TxtFile::removeFile(QString name)
 {
@@ -100,7 +93,7 @@ QString TxtFile::readWholeFileContents(QString name)
 {
     QFile file("Notes/"+name);
 
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Append))
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
         qDebug() << "FAIL FILE NOT EXIST***";
         //file.close();
@@ -109,7 +102,49 @@ QString TxtFile::readWholeFileContents(QString name)
         //file.open(QIODevice::ReadOnly | QIODevice::Text);
         QTextStream in(&file);
         QString fileContents = in.readAll();
+        in.flush();
         file.close();
         return fileContents;
     }
 }
+
+
+QString TxtFile::readFirstLineOfFileOnly(QString name)
+{
+    QFile file("Notes/"+name);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        qDebug() << "FAIL FILE NOT EXIST***";
+        return "NULL";
+    }else{
+        QTextStream in(&file);
+        QString firstLine = in.readLine();
+        in.flush();
+        file.close();
+        return firstLine;
+    }
+}
+
+QString TxtFile::readEverythingExceptFirstLineOfFile(QString name)
+{
+
+    QFile file("Notes/"+name);
+
+    if (!file.open(QIODevice::ReadOnly| QIODevice::Text))
+    {
+        qDebug() << "FAIL FILE NOT EXIST***";
+        return "NULL";
+    }else{
+        QTextStream in(&file);
+        QString contentsWithoutFirstLine;
+        in.readLine();
+        while(!in.atEnd()) {
+                contentsWithoutFirstLine.append(in.readLine()+"\n");
+        }
+        in.flush();
+        file.close();
+        return contentsWithoutFirstLine;
+    }
+}
+
+

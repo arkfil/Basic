@@ -7,21 +7,16 @@
 
 
     function loadAnotherNote(noteTitle,noteContents,noteId){
+        showNote(noteTitle,noteContents);
+        showNoteInTheMenu(noteTitle,noteContents,noteId)
+    }
 
-
+    function showNoteInTheMenu(noteTitle,noteContents,noteId){
         menuOption = Qt.createComponent("qrc:/MenuItem.qml");
-
-        //element = menuOption.createObject(flickableMenuArea.contentItem,{"x": 100, "y":100});
-
         menuOption.noteTitleLabel=noteTitle;
         menuOption.noteId=noteId;
-        previousNotePosition+=82;
-        menuOption.previousNotePosition=previousNotePosition;
         menuOption.noteColor="#444240";
-
-        showNote(noteTitle,noteContents);
         flickableMenuArea.append(menuOption);
-
     }
 
     function showNote(noteTitle,noteContents){
@@ -32,13 +27,11 @@
 
     function removeNote(index){
         if(index>=0){
+           manager.removeNote(flickableMenuArea.get(index).noteId)
            flickableMenuArea.remove(index);
-
         }
     }
 
     function clickNote(noteId){
         textNote.text=noteId;
     }
-
-
