@@ -7,11 +7,14 @@
 
     function saveNote(noteTitle,noteContents,index){
 
-        if(flickableMenuArea.get(index)!=null)
-            manager.saveNote(noteTitle,noteContents,flickableMenuArea.get(index).noteId)
-        else
-            manager.saveNote(noteTitle,noteContents,-1)
+        if(flickableMenuArea.get(index)!=null){
+            manager.saveNote(noteTitle,noteContents,flickableMenuArea.get(index).noteId);
+            flickableMenuArea.get(index).noteTitleLabel=noteTitleTextField.text;
+        }else
+            manager.saveNote(noteTitle,noteContents,-1);
 
+
+        //flickableMenuArea.get(index).text=noteTitleTextField;
     }
 
 

@@ -32,6 +32,7 @@ Window {
         TextField {
             id: noteTitleTextField
             y: 8
+            wrapMode: TextArea.NoWrap
             height: 66
             objectName: "noteTitle"
             color: "white"
@@ -44,7 +45,7 @@ Window {
             anchors.bottom: flickable.top
             anchors.bottomMargin: 6
             clip: true
-            maximumLength: 33
+            maximumLength: 117
             selectByMouse: true
             background: Rectangle{
                 width: noteTitleTextField.width
@@ -64,7 +65,7 @@ Window {
             anchors.right: parent.right
             anchors.rightMargin: 8
             anchors.left: parent.left
-            anchors.leftMargin: 293
+            anchors.leftMargin: 304
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 8
             anchors.top: parent.top
@@ -199,7 +200,7 @@ Window {
 // --------------------------------------------TO ADD NEW NOTE -------------------------------------------------------//
                         Rectangle{
                             id: addNote
-                            height: 74
+                            height: 64
                             visible: true
                             anchors.right: parent.right
                             anchors.rightMargin: 6
@@ -225,7 +226,7 @@ Window {
                                 anchors.left: parent.left
                                 anchors.leftMargin: 66
                                 anchors.top: parent.top
-                                anchors.topMargin:24
+                                anchors.topMargin:19
                                 font.pointSize: 15
                                 color: "#ffffff"
                                 visible: true

@@ -7,7 +7,7 @@ import "qrc:/scripts.js" as MyScripts
 
 Item{
     id: menuOption
-    height: 89
+    height: 93
     visible: true
     opacity:0.8
     anchors.right: parent.right
@@ -24,13 +24,15 @@ Item{
     Label{
         id: menuOptionLabel
         text: noteTitleLabel
-        wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+       // wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+        wrapMode: Text.WrapAnywhere
+        maximumLineCount: 4
         anchors.right: parent.right
-        anchors.rightMargin: 140
+        anchors.rightMargin: 8
         anchors.left: parent.left
         anchors.leftMargin: 8
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 33
+        anchors.bottomMargin: 0
         anchors.top: parent.top
         anchors.topMargin:0
         font.pointSize: 13
