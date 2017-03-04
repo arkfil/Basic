@@ -1,24 +1,15 @@
-
     var idOfCheckedElement;
     var menuOption;
     var element;
     var previousNotePosition=-82;
 
-
     function saveNote(noteTitle,noteContents,index){
-
         if(flickableMenuArea.get(index)!=null){
             manager.saveNote(noteTitle,noteContents,flickableMenuArea.get(index).noteId);
             flickableMenuArea.get(index).noteTitleLabel=noteTitleTextField.text;
         }else
             manager.saveNote(noteTitle,noteContents,-1);
-
-
-        //flickableMenuArea.get(index).text=noteTitleTextField;
     }
-
-
-
 
     function loadAnotherNote(noteTitle,noteContents,noteId){
         showNote(noteTitle,noteContents);
@@ -39,17 +30,13 @@
     }
 
     function removeNote(index){
-        if(index>=0){
+        if(index>=0 && flickableMenuArea.get(index)!=null){
            manager.removeNote(flickableMenuArea.get(index).noteId)
            flickableMenuArea.remove(index);
-
-
-
             if(takiseListwiev.currentIndex>0)
                 takiseListwiev.currentIndex-=1
             else
                 takiseListwiev.currentIndex=0;
-
         }
     }
 

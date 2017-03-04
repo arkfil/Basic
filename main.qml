@@ -12,6 +12,8 @@ Window {
     minimumWidth: 900
     title: qsTr("Notebook")
 
+    id: aWindow
+
     Rectangle {
         anchors.fill: parent
         id: insideWindow
@@ -206,14 +208,9 @@ Window {
                             anchors.rightMargin: 6
                             anchors.left: parent.left
                             anchors.leftMargin: 6
-//                            Rectangle{
-//                                id: addNoteBackground
-//                                anchors.fill:parent
-                                color: "#6c98dc"
-                                radius: 3
-                                border.width: 1
-                          //      opacity: 1
- //                           }
+                            color: "#6c98dc"
+                            radius: 3
+                            border.width: 1
 
                             Label{
                                 id: addNoteLabel
@@ -244,7 +241,6 @@ Window {
                                     visible: false
                                     text: qsTr("Click to add new note")
                                 }
-                                //onClicked: manager.readNote(noteId), takiseListwiev.currentIndex = index
                                 onClicked: takiseListwiev.currentIndex=-1,addNote.color="#97bffc", noteTitleTextField.text="", textNote.text=""
 
 
