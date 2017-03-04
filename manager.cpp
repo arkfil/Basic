@@ -59,7 +59,7 @@ int Manager::saveNote(QString noteName,QString noteContents, int noteId)
     // Poor implementation
     int newId=noteId;
 
-    if(noteId==Note::NOTE_ALREADY_EXISTS){
+    if(noteId==Note::NOTE_DOESNT_EXIST){
         newId = this -> getFreeId();
         Note note(noteName,noteContents,newId);
         QString idAsQString = QString::number(newId);
@@ -68,17 +68,19 @@ int Manager::saveNote(QString noteName,QString noteContents, int noteId)
         noteBase.insert(std::make_pair(newId,note));
         txtFile.saveToFile(noteName,noteContents,idAsQString);
         txtFile.addToFile(TxtFile::BASE_FILE_NAME, idAsQString);
+        emit pushNote(noteName, noteContents, newId);
     }else{
         noteBase.at(noteId).setContent(noteContents);
         noteBase.at(noteId).setName(noteName);
         QString idAsQString = QString::number(noteId);
         txtFile.saveToFile(noteName,noteContents,idAsQString);
+
     }
 
     std::cout << " Id w c++ w metodzie Managera saveNote() "<<newId;
 
 
-    emit pushNote(noteName, noteContents, newId);
+//    emit pushNote(noteName, noteContents, newId);
 
     ++count;
     emit increaseOne(msg.arg(count));

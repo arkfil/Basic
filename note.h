@@ -5,7 +5,7 @@
 struct Note
 {
 public:
-    static const int NOTE_ALREADY_EXISTS=-1;
+    static const int NOTE_DOESNT_EXIST=-1;
 
 
     Note(QString,QString,int);

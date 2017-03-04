@@ -7,7 +7,7 @@ import "qrc:/scripts.js" as MyScripts
 
 Item{
     id: menuOption
-    height: 74
+    height: 89
     visible: true
     opacity:0.8
     anchors.right: parent.right
@@ -24,7 +24,7 @@ Item{
     Label{
         id: menuOptionLabel
         text: noteTitleLabel
-        wrapMode: Text.WrapAnywhere
+        wrapMode: Text.WrapAtWordBoundaryOrAnywhere
         anchors.right: parent.right
         anchors.rightMargin: 140
         anchors.left: parent.left
@@ -46,12 +46,11 @@ Item{
 
         ToolTip{
             id: menuOptionTip
-
             delay: 1
             visible: false
             text: qsTr("Click to select this note")
 
         }
-        onClicked: manager.readNote(noteId), takiseListwiev.currentIndex = index
+        onClicked: manager.readNote(noteId), takiseListwiev.currentIndex = index, addNote.color="#6c98dc"
     }
 }

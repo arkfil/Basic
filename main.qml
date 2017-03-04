@@ -25,7 +25,38 @@ Window {
         anchors.topMargin: 0
         border.color: "black"
 
-        Label{ id: lololo; x: 106; y: 457; width: 128;height: 20 ; text: "asadasdasd" ; font.bold: true;horizontalAlignment: Text.AlignHCenter; color: "white"}
+
+
+
+
+        TextField {
+            id: noteTitleTextField
+            y: 8
+            height: 66
+            objectName: "noteTitle"
+            color: "white"
+            text: qsTr("Title")
+            font.pointSize: 22
+            anchors.left: menuArea.right
+            anchors.leftMargin: 6
+            anchors.right: saveButton.left
+            anchors.rightMargin: 6
+            anchors.bottom: flickable.top
+            anchors.bottomMargin: 6
+            clip: true
+            maximumLength: 33
+            selectByMouse: true
+            background: Rectangle{
+                width: noteTitleTextField.width
+                height: noteTitleTextField.height
+                color:"#2d2e32"
+                border.color: "gray"
+            }
+        }
+
+
+
+
 
         Flickable {
             id: flickable
@@ -33,12 +64,11 @@ Window {
             anchors.right: parent.right
             anchors.rightMargin: 8
             anchors.left: parent.left
-            anchors.leftMargin: 277
+            anchors.leftMargin: 293
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 8
             anchors.top: parent.top
             anchors.topMargin: 80
-
 
             TextArea.flickable: TextArea{
 
@@ -65,8 +95,6 @@ Window {
                     color:"#2d2e32"
                     border.color: "gray"
                 }
-
-
 
             }
             ScrollBar.vertical: ScrollBar { }
@@ -96,7 +124,9 @@ Window {
             visible: true
             property var tempIdk: 0;
 
-            onClicked: tempIdk = manager.saveNote(noteTitleTextField.text,textNote.text,-1)
+            //onClicked: manager.saveNote(noteTitleTextField.text,textNote.text,-1)
+            onClicked: MyScripts.saveNote(noteTitleTextField.text,textNote.text,takiseListwiev.currentIndex)
+
 
             hoverEnabled: true
             ToolTip.delay: 1
@@ -106,7 +136,7 @@ Window {
 
         Button {
             id: deleteButton
-            onClicked: MyScripts.removeNote(takiseListwiev.currentIndex), takiseListwiev.currentIndex-=1
+            onClicked: MyScripts.removeNote(takiseListwiev.currentIndex)
             x: 830
             y: 8
             width: 122
@@ -122,31 +152,6 @@ Window {
             ToolTip.delay: 1
             ToolTip.visible: hovered
             ToolTip.text: qsTr("Delete note")
-        }
-
-        TextField {
-            id: noteTitleTextField
-            y: 8
-            height: 66
-            objectName: "noteTitle"
-            color: "white"
-            text: qsTr("Title")
-            font.pointSize: 22
-            anchors.left: menuArea.right
-            anchors.leftMargin: 6
-            anchors.right: saveButton.left
-            anchors.rightMargin: 6
-            anchors.bottom: flickable.top
-            anchors.bottomMargin: 6
-            clip: true
-            maximumLength: 33
-            selectByMouse: true
-            background: Rectangle{
-                width: noteTitleTextField.width
-                height: noteTitleTextField.height
-                color:"#2d2e32"
-                border.color: "gray"
-            }
         }
 
         // ------------------------------------------------------- MENU AREA ---------------------------------------------------------------------
@@ -167,23 +172,90 @@ Window {
             objectName:"menuArea"
             opacity: 0.9
 
-
             ListView{
-
                 Component.onCompleted: manager.readNotesToMemory();
 
-                anchors.fill: parent
+                //anchors.fill: parent
+                anchors.top: addNote.bottom
+                anchors.topMargin: 3
+                anchors.right: parent.right
+                anchors.left: parent.left
+                anchors.bottom: parent.bottom
+
+
                 id:takiseListwiev
                 highlight: Rectangle { color: "lightsteelblue"; radius: 5; anchors.left:parent.left; anchors.leftMargin: 6 }
-                highlightMoveVelocity:900
-                highlightRangeMode: ListView.ApplyRange
+                highlightMoveVelocity:2900
+              //  highlightRangeMode: ListView.ApplyRange
+                highlightRangeMode: ListView.NoHighlightRange
                 highlightFollowsCurrentItem: true
                 focus: true
                 spacing :3
-                snapMode: ListView.SnapToItem
+                //snapMode: ListView.SnapToItem
                 model: ListModel{ id: flickableMenuArea }
                 delegate: MenuItemLayout{}
             }
+
+// --------------------------------------------TO ADD NEW NOTE -------------------------------------------------------//
+                        Rectangle{
+                            id: addNote
+                            height: 74
+                            visible: true
+                            anchors.right: parent.right
+                            anchors.rightMargin: 6
+                            anchors.left: parent.left
+                            anchors.leftMargin: 6
+//                            Rectangle{
+//                                id: addNoteBackground
+//                                anchors.fill:parent
+                                color: "#6c98dc"
+                                radius: 3
+                                border.width: 1
+                          //      opacity: 1
+ //                           }
+
+                            Label{
+                                id: addNoteLabel
+                                height: 26
+                                text: "Add new note"
+                                horizontalAlignment: Text.AlignLeft
+                                wrapMode: Text.NoWrap
+                                anchors.right: parent.right
+                                anchors.rightMargin: 66
+                                anchors.left: parent.left
+                                anchors.leftMargin: 66
+                                anchors.top: parent.top
+                                anchors.topMargin:24
+                                font.pointSize: 15
+                                color: "#ffffff"
+                                visible: true
+                            }
+
+                            MouseArea{
+                                anchors.fill: parent
+                                hoverEnabled: true
+                                onHoveredChanged: addNoteLabelTip.visible=true, cursorShape = Qt.PointingHandCursor
+                                onExited: addNoteLabelTip.visible=false
+
+                                ToolTip{
+                                    id: addNoteLabelTip
+                                    delay: 1
+                                    visible: false
+                                    text: qsTr("Click to add new note")
+                                }
+                                //onClicked: manager.readNote(noteId), takiseListwiev.currentIndex = index
+                                onClicked: takiseListwiev.currentIndex=-1,addNote.color="#97bffc", noteTitleTextField.text="", textNote.text=""
+
+
+                            }
+                        }
+
+// ----------------------------------------------TO ADD NEW NOTE ----------------------------------------------------//
+
+
+
+
+
 
             Label {
                 id: confirmations
